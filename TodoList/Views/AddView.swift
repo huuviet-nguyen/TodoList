@@ -13,18 +13,32 @@ struct AddView: View {
     @State var textFieldText: String = ""
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
+    @State var priority: Priority = .veryLow
     var body: some View {
         ScrollView {
             VStack {
+                Text("Content")
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
                 TextField("Type something here...", text: $textFieldText)
                     .padding(.horizontal)
                     .frame(height: 50)
-                    .background(.white)
                 .cornerRadius(10)
+                
+                Text("Priority")
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Picker("", selection: $priority) {
+                    ForEach(Priority.allCases, id: \.self) {
+                        Text($0.description)
+                    }
+                }
+                .pickerStyle(.segmented)
                 
                 Button {
                     if textIsAppropriate() {
-                        listViewModel.addItem(title: textFieldText)
+                        listViewModel.addItem(title: textFieldText, priority: priority)
                         presentationMode.wrappedValue.dismiss()
                     }
                 } label: {

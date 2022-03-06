@@ -13,7 +13,7 @@ struct ListRowView: View {
     var body: some View {
         HStack {
             Image(systemName: item.isCompleted ? "checkmark.circle": "circle")
-                .foregroundColor(item.isCompleted ? .blue : .black)
+                .foregroundColor(item.colorByStatus())
             Text(item.title)
             Spacer()
         }
@@ -22,7 +22,7 @@ struct ListRowView: View {
 
 struct ListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        let item = ItemModel(title: "This is the first title!", isCompleted: false)
+        let item = ItemModel(title: "This is the first title!", isCompleted: false, priority: .veryLow)
         ListRowView(item: item)
     }
 }
